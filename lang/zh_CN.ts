@@ -35,7 +35,7 @@
     <name>AboutWidget</name>
     <message>
         <source>About QMPlay2</source>
-        <translation>关于 QMPlay2</translation>
+        <translation>关于 扣货科技</translation>
     </message>
     <message>
         <source>Logs</source>
@@ -835,7 +835,7 @@
     </message>
     <message>
         <source>Do you want to associate files with QMPlay2</source>
-        <translation>您要让 QMPlay2 关联文件吗</translation>
+        <translation>您要让 扣货科技 关联文件吗</translation>
     </message>
 </context>
 <context>
@@ -1059,7 +1059,7 @@
     </message>
     <message>
         <source>&amp;About QMPlay2</source>
-        <translation>关于 QMPlay2(&amp;A)</translation>
+        <translation>关于 扣货科技(&amp;A)</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -1135,7 +1135,7 @@
     </message>
     <message>
         <source>Open new QMPlay2 instance and play specified &lt;url&gt;.</source>
-        <translation>打开新 QMPlay2 实例并播放指定&lt;网址&gt;。</translation>
+        <translation>打开新 扣货科技 实例并播放指定&lt;网址&gt;。</translation>
     </message>
     <message>
         <source>Remove specified &lt;url&gt; from playlist.</source>
@@ -1303,7 +1303,7 @@
     </message>
     <message>
         <source>QMPlay2 is doing something in the background.</source>
-        <translation>QMPlay2 正在后台运行任务。</translation>
+        <translation>扣货科技 正在后台运行任务。</translation>
     </message>
     <message>
         <source>The update is being downloaded now.</source>
@@ -1559,7 +1559,7 @@
     </message>
     <message>
         <source>Associate files with QMPlay2</source>
-        <translation>用 QMPlay2 关联文件</translation>
+        <translation>用 扣货科技 关联文件</translation>
     </message>
     <message>
         <source>Select all</source>
@@ -1575,11 +1575,11 @@
     </message>
     <message>
         <source>Enqueue in QMPlay2</source>
-        <translation>加入 QMPlay2 播放队列</translation>
+        <translation>加入 扣货科技 播放队列</translation>
     </message>
     <message>
         <source>Play in QMPlay2</source>
-        <translation>用 QMPlay2 播放</translation>
+        <translation>用 扣货科技 播放</translation>
     </message>
     <message>
         <source>FFT spectrum size</source>
@@ -1719,7 +1719,7 @@
     </message>
     <message>
         <source>Display subtitles from YouTube. Follow default subtitles language and QMPlay2 language.</source>
-        <translation>显示 YouTube 字幕。跟随默认语言和 QMPlay2 语言。</translation>
+        <translation>显示 YouTube 字幕。跟随默认语言和 扣货科技 语言。</translation>
     </message>
     <message>
         <source>Decoder enabled</source>
@@ -1939,7 +1939,7 @@
     </message>
     <message>
         <source>Not all audio filters are supported in QMPlay2. To use some filters like &apos;%4&apos;, you need to enable &quot;force channels conversion&quot; and &quot;use channel conversion before filters&quot; in playback settings. Please refer to the %1FFmpeg documentation%2.%3Available audio filters:</source>
-        <translation>QMPlay2 并不支持所有音频滤镜。若要使用如 &apos;%4&apos; 等滤镜，您需要在回放设置中启用&quot;强制声道转换&quot;和&quot;在滤镜前使用声道转换&quot;。请参阅 %1FFmpeg 文档%2。%3可用音频滤镜：</translation>
+        <translation>扣货科技 并不支持所有音频滤镜。若要使用如 &apos;%4&apos; 等滤镜，您需要在回放设置中启用&quot;强制声道转换&quot;和&quot;在滤镜前使用声道转换&quot;。请参阅 %1FFmpeg 文档%2。%3可用音频滤镜：</translation>
     </message>
 </context>
 <context>
@@ -2894,7 +2894,7 @@
     <name>QMPlay2CoreClass</name>
     <message>
         <source>invalid QMPlay2 library</source>
-        <translation>无效的 QMPlay2 库</translation>
+        <translation>无效的 扣货科技 库</translation>
     </message>
     <message>
         <source>Can&apos;t open log file</source>
@@ -2902,7 +2902,7 @@
     </message>
     <message>
         <source>too old QMPlay2 library</source>
-        <translation>QMPlay2 库过旧</translation>
+        <translation>扣货科技 库过旧</translation>
     </message>
     <message>
         <source>mismatch module API version</source>
@@ -2928,17 +2928,17 @@
     <name>QObject</name>
     <message>
         <source>QMPlay2 has been updated to version</source>
-        <translation>QMPlay2 已更新至版本</translation>
+        <translation>扣货科技 已更新至版本</translation>
     </message>
     <message>
         <source>QMPlay2 hasn&apos;t been updated. Do you want to run the update (recommended)?</source>
-        <translation>QMPlay2 未更新。您要运行更新吗（推荐）？</translation>
+        <translation>扣货科技 未更新。您要运行更新吗（推荐）？</translation>
     </message>
     <message>
         <source>QtSvg icon engine plugin doesn&apos;t exist.
 QMPlay2 will not scale up icons!</source>
         <translation>QtSvg 图标引擎插件不存在。
-QMPlay2 将不会放大图标！</translation>
+扣货科技 将不会放大图标！</translation>
     </message>
 </context>
 <context>
@@ -3350,7 +3350,7 @@ Partially checked doesn&apos;t affect seeking on slider.</source>
     </message>
     <message>
         <source>Use QMPlay2 video output modules. This will also be used if other renderers aren&apos;t available.</source>
-        <translation>使用 QMPlay2 视频输出模块。如果其它渲染器不可用时也使用。</translation>
+        <translation>使用 扣货科技 视频输出模块。如果其它渲染器不可用时也使用。</translation>
     </message>
     <message>
         <source>Use OpenGL on entire window</source>
@@ -3630,7 +3630,7 @@ Partially checked only if the content has less channels than the specified value
     <name>Updater</name>
     <message>
         <source>QMPlay2 updates</source>
-        <translation>QMPlay2 更新</translation>
+        <translation>扣货科技 更新</translation>
     </message>
     <message>
         <source>Application is up-to-date</source>
@@ -3674,15 +3674,15 @@ Partially checked only if the content has less channels than the specified value
     </message>
     <message>
         <source>Update is available for QMPlay2!</source>
-        <translation>QMPlay2 更新可用！</translation>
+        <translation>扣货科技 更新可用！</translation>
     </message>
     <message>
         <source>New QMPlay2 version: %1</source>
-        <translation>新 QMPlay2 版本：%1</translation>
+        <translation>新 扣货科技 版本：%1</translation>
     </message>
     <message>
         <source>Download page is in &quot;Help-&gt;About QMPlay2&quot;</source>
-        <translation>下载页面位于&quot;帮助-&gt;关于 QMPlay2&quot;</translation>
+        <translation>下载页面位于&quot;帮助-&gt;关于 扣货科技&quot;</translation>
     </message>
 </context>
 <context>
