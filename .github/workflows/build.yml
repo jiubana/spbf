@@ -125,6 +125,15 @@ jobs:
         
         copy_dlls
 
+        # Explicitly copy PortAudio dependencies if missing
+        # This is a common cause for "no sound"
+        if [ ! -f "dist/libportaudio-2.dll" ]; then
+             if [ -f "/mingw64/bin/libportaudio-2.dll" ]; then
+                 cp /mingw64/bin/libportaudio-2.dll dist/
+                 echo "Explicitly copied libportaudio-2.dll"
+             fi
+        fi
+
         # Create Zip
         cd dist
         7z a -tzip ../扣货科技-Windows.zip *
