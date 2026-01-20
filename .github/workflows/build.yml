@@ -105,8 +105,8 @@ jobs:
             local changed=1
             while [ $changed -eq 1 ]; do
                 changed=0
-                # Find all .exe and .dll files in dist
-                local binaries=$(find dist -name "*.exe" -o -name "*.dll")
+                # Find all .exe and .dll files in dist (including subdirectories like modules/)
+                local binaries=$(find dist -type f \( -name "*.exe" -o -name "*.dll" \))
                 
                 for bin in $binaries; do
                     # Get list of dependencies
