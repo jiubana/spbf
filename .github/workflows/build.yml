@@ -24,7 +24,7 @@ jobs:
         arch: 'win64_mingw81'
         dir: '${{ runner.temp }}/qt'
         install-deps: 'true'
-        modules: 'qtcharts qtdatavis3d qtvirtualkeyboard qtwebengine qtwebglplugin qtwebview qtserialport qtserialbus'
+        modules: 'qtcharts qtdatavis3d qtvirtualkeyboard'
 
     - name: Build
       run: |
