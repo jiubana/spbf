@@ -37,6 +37,7 @@ jobs:
           mingw-w64-x86_64-libsidplayfp
           mingw-w64-x86_64-portaudio
           git
+          p7zip
 
     - name: Fix QtWinExtras Symlink
       run: |
@@ -47,11 +48,57 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install
+        cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install
         ninja
-    
+        ninja install
+
+    - name: Package Distribution
+      run: |
+        mkdir dist
+        cp -r install/* dist/
+        
+        cd dist
+        # 查找主程序位置
+        exe="QMPlay2.exe"
+        if [ ! -f "$exe" ]; then
+             if [ -f "bin/QMPlay2.exe" ]; then
+                 exe="bin/QMPlay2.exe"
+                 cd bin
+             fi
+        fi
+        
+        # 自动提取所有依赖 DLL
+        deps=$(ldd "$exe" | grep "/mingw64" | awk '{print $3}' | sort | uniq)
+        for dep in $deps; do
+            cp "$dep" .
+        done
+        
+        # 如果进入了 bin 目录则返回
+        if [ "$exe" != "QMPlay2.exe" ]; then
+            cd ..
+        fi
+        
+        # 复制 Qt 插件
+        target_root="."
+        if [ -d "bin" ]; then target_root="bin"; fi
+        
+        mkdir -p "$target_root/platforms"
+        cp /mingw64/share/qt5/plugins/platforms/qwindows.dll "$target_root/platforms/"
+        
+        mkdir -p "$target_root/styles"
+        cp /mingw64/share/qt5/plugins/styles/*.dll "$target_root/styles/" || true
+
+        mkdir -p "$target_root/imageformats"
+        cp /mingw64/share/qt5/plugins/imageformats/*.dll "$target_root/imageformats/" || true
+        
+        mkdir -p "$target_root/iconengines"
+        cp /mingw64/share/qt5/plugins/iconengines/*.dll "$target_root/iconengines/" || true
+        
+        cd ..
+        7z a -tzip 扣货科技-Windows.zip dist/*
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: 扣货科技-Windows
-        path: build/src/gui/QMPlay2.exe
+        name: 扣货科技-Windows-Package
+        path: 扣货科技-Windows.zip
