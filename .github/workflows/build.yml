@@ -68,7 +68,7 @@ jobs:
 
         # Copy Translation
         mkdir -p dist/lang
-        cp lang/zh_CN.qm dist/lang/
+        cp build/lang/zh_CN.qm dist/lang/
 
         # Copy Modules (Plugins)
         # modules are in install/modules
