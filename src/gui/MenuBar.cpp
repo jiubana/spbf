@@ -89,7 +89,19 @@ MenuBar::MenuBar()
     addMenu(player = new Player(this));
     addMenu(playback = new Playback(this));
     addMenu(options = new Options(this));
-    addMenu(help = new Help(this));
+    // addMenu(help = new Help(this)); // Removed as per request
+    help = new Help(this); // Keep instance to avoid crash in shortcuts if referenced, but don't show menu?
+    // Actually, if I don't addMenu, it won't show. But setKeyShortcuts uses 'help->about'.
+    // So I must instantiate it, but not add it to the menu bar. 
+    // OR, I should comment out setKeyShortcuts usage too.
+    // Let's comment out addMenu but instantiate it so pointers are valid?
+    // "addMenu(widgets = ...)" adds it to UI.
+    // If I just do "help = new Help(this);" it created the QMenu but doesn't add it to bar.
+    // But better to fully disable it.
+    
+    // For now, let's just comment out adding to menu.
+    // The user said "remove help bar" (help menu).
+    // addMenu(help = new Help(this));
     connect(widgets, SIGNAL(aboutToShow()), this, SLOT(widgetsMenuShow()));
 #ifdef Q_OS_MACOS
     widgets->addAction(QString()); //Mac must have got at least one item inside menu, otherwise the menu is not shown
@@ -560,7 +572,7 @@ MenuBar::Options::Options(MenuBar *parent) :
 MenuBar::Help::Help(MenuBar *parent) :
     QMenu(Help::tr("&Help"), parent)
 {
-    newAction(Help::tr("&About QMPlay2"), this, about, false, QIcon(), false, QAction::AboutRole);
+    newAction(Help::tr("&关于 快播"), this, about, false, QIcon(), false, QAction::AboutRole);
 #ifdef UPDATER
     newAction(Help::tr("&Updates"), this, updates, false, QIcon(), false);
 #endif
@@ -693,10 +705,10 @@ void MenuBar::setKeyShortcuts()
     shortcuts->appendAction(options->trayVisible, "KeyBindings/Options-trayVisible", "Ctrl+T");
 
 
-    shortcuts->appendAction(help->about, "KeyBindings/Help-about", "F1");
-#ifdef UPDATER
-    shortcuts->appendAction(help->updates, "KeyBindings/Help-updates", "F12");
-#endif
+//    shortcuts->appendAction(help->about, "KeyBindings/Help-about", "F1");
+//#ifdef UPDATER
+//    shortcuts->appendAction(help->updates, "KeyBindings/Help-updates", "F12");
+//#endif
 
 #ifdef Q_OS_ANDROID
     playlist->delEntriesFromDisk->setVisible(false);

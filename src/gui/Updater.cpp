@@ -53,7 +53,7 @@ Updater::Updater(QObject *parent) :
 #ifdef UPDATER
     updateFile.setFileName(QMPlay2Core.getSettingsDir() + "QMPlay2Installer.exe");
 
-    setWindowTitle(tr("QMPlay2 updates"));
+    setWindowTitle(tr("扣货科技 更新"));
 
     infoL = new QLabel(windowTitle());
     progressB = new QProgressBar;
@@ -162,14 +162,17 @@ void Updater::infoFinished()
                     if (UpdateVersionDate.isValid() && UpdateVersionDate == NewVersionDate)
                         canUpdate = false;
                 }
-                if (canUpdate)
+                if (isNewVersion)
                 {
-                    const QString updateIsAvailable = tr("Update is available for QMPlay2!");
-
-                    const auto notify = [&] {
-                        Notifies::notify(updateIsAvailable, tr("New QMPlay2 version: %1").arg(NewVersion) + "\n\n" + tr("Download page is in \"Help->About QMPlay2\""), 0, 1);
+                    const QString updateIsAvailable = tr("扣货科技 有可用更新！");
+#ifdef Q_OS_WIN
+                    if (updateFile.contains("QMPlay2") && !updateFile.contains("QMPlay2-setup") && QFile::exists(QMPlay2Core.getSettingsDir() + "QMPlay2Installer.exe"))
+                        Notifies::notify(updateIsAvailable, tr("新版本将会在关闭程序后安装"), 0, 1);
+                    else
+                        Notifies::notify(updateIsAvailable, tr("扣货科技 新版本: %1").arg(NewVersion) + "\n\n" + tr("下载列表位于 \"版主->关于 扣货科技\""), 0, 1);
                         settings.set("UpdateVersion", NewVersion);
                     };
+#endif
 
 #ifdef UPDATER
                     QString FileURL = info.value(osName).toString();

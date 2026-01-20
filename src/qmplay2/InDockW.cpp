@@ -155,7 +155,13 @@ void InDockW::paintEvent(QPaintEvent *)
         const bool drawBackground = (isFloating || !hasWallpaper);
         const bool drawBlurredImage = drawBackground && !customPixmapBlurred.isNull();
 
-        if (drawBackground && !drawBlurredImage)
+        // Always draw the custom background image if not covered by something else
+        static const QPixmap bgPixmap(":/background.jpg");
+        if (!bgPixmap.isNull())
+        {
+             p.drawPixmap(rect(), bgPixmap);
+        }
+        else if (drawBackground && !drawBlurredImage)
         {
             if (grad1 == grad2)
                 p.fillRect(rect(), grad1);
@@ -171,17 +177,7 @@ void InDockW::paintEvent(QPaintEvent *)
 
         if (customPixmap.isNull())
         {
-            const QSize size(128, 128);
-            QPixmap qmp2Pixmap = Functions::getPixmapFromIcon(QMPlay2Core.getQMPlay2Icon(), size, this);
-
-            p.drawPixmap(width() / 2 - size.width() / 2, fullHeight / 2 - size.height() / 2, qmp2Pixmap);
-
-            QFont font = p.font();
-            font.setPointSize(22);
-            font.setItalic(true);
-            p.setFont(font);
-            p.setPen(qmpTxt);
-            p.drawText(0, fullHeight / 2 + size.height() / 2, width(), 100, Qt::AlignHCenter | Qt::AlignTop, "QMPlay2");
+             // Do nothing (background already drawn)
         }
         else
         {

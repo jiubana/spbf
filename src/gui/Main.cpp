@@ -701,7 +701,7 @@ int main(int argc, char *argv[])
         g_useGui = false;
     }
 #endif
-    QCoreApplication::setApplicationName("QMPlay2");
+    QCoreApplication::setApplicationName("扣货科技");
 
     QMPlay2GUIClass &qmplay2Gui = QMPlay2GUI; //Create "QMPlay2GUI" instance
     g_defaultMsgHandler = qInstallMessageHandler(messageHandler);
@@ -860,7 +860,7 @@ int main(int argc, char *argv[])
         if (help)
         {
             parser = createCmdParser(true);
-            parser->setApplicationDescription(QString("QMPlay2 - Qt Media Player 2 (%1)").arg((QString)Version::get()));
+            parser->setApplicationDescription(QString("扣货科技 - 全能媒体播放器 (%1)").arg((QString)Version::get()));
             printf("%s", parser->helpText().toLocal8Bit().constData());
             fflush(stdout);
             delete parser;
@@ -930,14 +930,14 @@ int main(int argc, char *argv[])
             UpdateFile.remove(0, 7);
             if (lastVer != Version::get())
             {
-                const QString updateString = QObject::tr("QMPlay2 has been updated to version") + " " + Version::get();
+                const QString updateString = QObject::tr("扣货科技 已更新至版本") + " " + Version::get();
                 QMPlay2Core.logInfo(updateString);
                 QMessageBox::information(nullptr, QCoreApplication::applicationName(), updateString);
                 settings.remove("UpdateVersion");
             }
             else
             {
-                const QString message = QObject::tr("QMPlay2 hasn't been updated. Do you want to run the update (recommended)?");
+                const QString message = QObject::tr("扣货科技 尚未更新。是否要运行更新程序（推荐）？");
                 if (QMessageBox::question(nullptr, QCoreApplication::applicationName(), message, QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
                 {
                     qmplay2Gui.runUpdate(UpdateFile);

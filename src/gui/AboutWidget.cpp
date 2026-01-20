@@ -38,11 +38,11 @@
 
 AboutWidget::AboutWidget()
 {
-    setWindowTitle(tr("About QMPlay2"));
+    setWindowTitle(tr("关于 扣货科技"));
     setAttribute(Qt::WA_DeleteOnClose);
 
     QString labelText;
-    labelText += "<b>QMPlay2:</b> " + tr("video and audio player");
+    labelText += "<b>扣货科技:</b> " + tr("video and audio player");
     labelText += "<br/><b>" + tr("Programmer") + ":</b> <a href='mailto:mumei6102@gmail.com'>Błażej Szczygieł</a>";
     labelText += "<br/><b>" + tr("Version") + ":</b> " + Version::get() + " (" + QSysInfo::buildCpuArchitecture();
 #if !defined(Q_OS_MACOS) && !defined(Q_OS_WIN)

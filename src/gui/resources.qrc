@@ -35,6 +35,8 @@
         <file alias="video-display.svgz">Icons/video-display.svgz</file>
         <file alias="document-save.svgz">Icons/document-save.svgz</file>
 
+        <file alias="background.jpg">background.jpg</file>
+
         <file>Colors/QMPlay1_dark.QMPlay2Color</file>
     </qresource>
 </RCC>
