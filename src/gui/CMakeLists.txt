@@ -206,6 +206,9 @@ if(NOT ANDROID)
         MACOSX_BUNDLE ${ICNS_FILE_PATH} ${ICNS_FILE_FILE_PATH} ${ICNS_PLAYLIST_FILE_PATH}
         ${GUI_FILES}
     )
+    if(WIN32)
+        set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "扣货科技")
+    endif()
 else()
     qt_add_executable(${PROJECT_NAME}
         ${GUI_FILES}

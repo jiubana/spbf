@@ -2161,8 +2161,7 @@ void MainWidget::closeEvent(QCloseEvent *e)
 #endif
 
     const QString quitMsg = tr("Are you sure you want to quit?");
-    if (playC.isPlaying() || //Playing
-        QMPlay2Core.getSettings().getBool("MainWidget/HideOnClose") || //Hide on close
+    if (QMPlay2Core.getSettings().getBool("MainWidget/HideOnClose") || //Hide on close
         (QMPlay2Core.isWorking() && QMessageBox::question(this, QString(), tr("扣货科技 正在后台执行任务。") + " " + quitMsg, QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
 #ifdef UPDATER
         || (updater.downloading() && QMessageBox::question(this, QString(), tr("The update is being downloaded now.") + " " + quitMsg, QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
