@@ -37,6 +37,11 @@ jobs:
           mingw-w64-x86_64-libsidplayfp
           git
 
+    - name: Fix QtWinExtras Symlink
+      run: |
+        rm -f src/gui/Windows/qt/QtWinExtras
+        cp -r src/gui/Windows/qt/qtwinextras_submodule/src/winextras src/gui/Windows/qt/QtWinExtras
+
     - name: Build
       run: |
         mkdir build
