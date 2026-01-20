@@ -53,47 +53,13 @@ jobs:
         ninja install
 
     - name: Package Distribution
-      run: |
-        mkdir dist
-        cp -r install/* dist/
-        
-        cd dist
-        # Copy dependencies using ldd
-        # We target QMPlay2.exe which should be in the root of dist if CMAKE_INSTALL_PREFIX was respected for WIN32
-        exe="QMPlay2.exe"
-        if [ ! -f "$exe" ]; then
-             echo "QMPlay2.exe not found in root, checking bin.."
-             if [ -f "bin/QMPlay2.exe" ]; then
-                 exe="bin/QMPlay2.exe"
-                 cd bin
-             else
-                 echo "Error: QMPlay2.exe not found!"
-                 ls -R
-                 exit 1
-             fi
-        fi
-        
-        echo "Resolving dependencies for $exe..."
-        deps=$(ldd "$exe" | grep "/mingw64" | awk '{print $3}' | sort | uniq)
-        for dep in $deps; do
-            cp "$dep" .
-        done
-        
-        # Go back to dist root if we went into bin
-        if [ "$exe" != "QMPlay2.exe" ]; then
-            cd ..
-        fi
-        
-        # Copy Qt plugins
-        # Ensure target directories exist. If exe is in bin, plugins typically go to bin/platforms
-        # But if exe is in root, plugins go to platforms
-    - name: Package Distribution
       shell: msys2 {0}
       run: |
         mkdir -p dist
         
-        # Copy Executable
-        cp bin/QMPlay2.exe dist/扣货科技.exe
+        # Copy Executable (Renaming to Chinese name)
+        # 'ninja install' puts artifacts in 'install' directory
+        cp install/bin/QMPlay2.exe dist/扣货科技.exe
         
         # Copy qt.conf
         if [ -f "qt.conf" ]; then
@@ -105,13 +71,11 @@ jobs:
         cp lang/zh_CN.qm dist/lang/
 
         # Copy Modules (Plugins)
-        # Verify where modules are built. Usually in src/modules or bin/modules
+        # modules are in install/modules
         mkdir -p dist/modules
-        # Try finding modules from build dir
-        find src/modules -name "*.dll" -exec cp {} dist/modules/ \;
+        cp -r install/modules/* dist/modules/
         
         # Copy Qt Plugins
-        # We manually copy specific plugins we know we need
         mkdir -p dist/plugins/platforms
         cp /mingw64/share/qt5/plugins/platforms/qwindows.dll dist/plugins/platforms/
         
@@ -125,7 +89,6 @@ jobs:
         cp /mingw64/share/qt5/plugins/iconengines/*.dll dist/plugins/iconengines/ || true
         
         # Recursively copy DLL dependencies
-        # This function loops until no new DLLs are added
         copy_dlls() {
             local changed=1
             while [ $changed -eq 1 ]; do
