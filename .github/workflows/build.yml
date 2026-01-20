@@ -1,4 +1,4 @@
-name: Windows Build
+name: Windows Build (MSYS2)
 
 on:
   push:
@@ -9,29 +9,40 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
+    defaults:
+      run:
+        shell: msys2 {0}
+    
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: recursive
 
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+    - uses: msys2/setup-msys2@v2
       with:
-        version: '5.15.2'
-        host: 'windows'
-        target: 'desktop'
-        arch: 'win64_mingw81'
-        dir: '${{ runner.temp }}/qt'
-        install-deps: 'true'
-        modules: 'qtcharts qtdatavis3d qtvirtualkeyboard'
+        msystem: MINGW64
+        update: true
+        install: >-
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-pkg-config
+          mingw-w64-x86_64-qt5
+          mingw-w64-x86_64-ffmpeg
+          mingw-w64-x86_64-libass
+          mingw-w64-x86_64-taglib
+          mingw-w64-x86_64-libcdio
+          mingw-w64-x86_64-libcddb
+          mingw-w64-x86_64-libgme
+          mingw-w64-x86_64-libsidplayfp
+          git
 
     - name: Build
       run: |
         mkdir build
         cd build
-        cmake .. -G "CodeBlocks - MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
-        cmake --build . --parallel
+        cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install
+        ninja
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
