@@ -61,6 +61,18 @@ jobs:
         # 'ninja install' puts artifact in root of install dir for WIN32
         cp install/QMPlay2.exe dist/扣货科技.exe
         
+        # Copy libqmplay2.dll
+        # It's installed in the same prefix as executable on Windows
+        if [ -f "install/libqmplay2.dll" ]; then
+             cp install/libqmplay2.dll dist/
+        elif [ -f "install/bin/libqmplay2.dll" ]; then
+             cp install/bin/libqmplay2.dll dist/
+        else
+             echo "Error: libqmplay2.dll not found!"
+             ls -R install
+             exit 1
+        fi
+        
         # Copy qt.conf
         if [ -f "qt.conf" ]; then
           cp qt.conf dist/
