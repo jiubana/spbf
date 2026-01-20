@@ -58,8 +58,8 @@ jobs:
         mkdir -p dist
         
         # Copy Executable (Renaming to Chinese name)
-        # 'ninja install' puts artifacts in 'install' directory
-        cp install/bin/QMPlay2.exe dist/扣货科技.exe
+        # 'ninja install' puts artifact in root of install dir for WIN32
+        cp install/QMPlay2.exe dist/扣货科技.exe
         
         # Copy qt.conf
         if [ -f "qt.conf" ]; then
