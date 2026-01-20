@@ -58,44 +58,101 @@ jobs:
         cp -r install/* dist/
         
         cd dist
-        # 查找主程序位置
+        # Copy dependencies using ldd
+        # We target QMPlay2.exe which should be in the root of dist if CMAKE_INSTALL_PREFIX was respected for WIN32
         exe="QMPlay2.exe"
         if [ ! -f "$exe" ]; then
+             echo "QMPlay2.exe not found in root, checking bin.."
              if [ -f "bin/QMPlay2.exe" ]; then
                  exe="bin/QMPlay2.exe"
                  cd bin
+             else
+                 echo "Error: QMPlay2.exe not found!"
+                 ls -R
+                 exit 1
              fi
         fi
         
-        # 自动提取所有依赖 DLL
+        echo "Resolving dependencies for $exe..."
         deps=$(ldd "$exe" | grep "/mingw64" | awk '{print $3}' | sort | uniq)
         for dep in $deps; do
             cp "$dep" .
         done
         
-        # 如果进入了 bin 目录则返回
+        # Go back to dist root if we went into bin
         if [ "$exe" != "QMPlay2.exe" ]; then
             cd ..
         fi
         
-        # 复制 Qt 插件
-        target_root="."
-        if [ -d "bin" ]; then target_root="bin"; fi
+        # Copy Qt plugins
+        # Ensure target directories exist. If exe is in bin, plugins typically go to bin/platforms
+        # But if exe is in root, plugins go to platforms
+    - name: Package Distribution
+      shell: msys2 {0}
+      run: |
+        mkdir -p dist
         
-        mkdir -p "$target_root/platforms"
-        cp /mingw64/share/qt5/plugins/platforms/qwindows.dll "$target_root/platforms/"
+        # Copy Executable
+        cp bin/扣货科技.exe dist/
         
-        mkdir -p "$target_root/styles"
-        cp /mingw64/share/qt5/plugins/styles/*.dll "$target_root/styles/" || true
+        # Copy qt.conf
+        if [ -f "qt.conf" ]; then
+          cp qt.conf dist/
+        fi
 
-        mkdir -p "$target_root/imageformats"
-        cp /mingw64/share/qt5/plugins/imageformats/*.dll "$target_root/imageformats/" || true
+        # Copy Translation
+        mkdir -p dist/lang
+        cp lang/zh_CN.qm dist/lang/
+
+        # Copy Modules (Plugins)
+        # Verify where modules are built. Usually in src/modules or bin/modules
+        mkdir -p dist/modules
+        # Try finding modules from build dir
+        find src/modules -name "*.dll" -exec cp {} dist/modules/ \;
         
-        mkdir -p "$target_root/iconengines"
-        cp /mingw64/share/qt5/plugins/iconengines/*.dll "$target_root/iconengines/" || true
+        # Copy Qt Plugins
+        # We manually copy specific plugins we know we need
+        mkdir -p dist/plugins/platforms
+        cp /mingw64/share/qt5/plugins/platforms/qwindows.dll dist/plugins/platforms/
         
-        cd ..
-        7z a -tzip 扣货科技-Windows.zip dist/*
+        mkdir -p dist/plugins/styles
+        cp /mingw64/share/qt5/plugins/styles/*.dll dist/plugins/styles/ || true
+
+        mkdir -p dist/plugins/imageformats
+        cp /mingw64/share/qt5/plugins/imageformats/*.dll dist/plugins/imageformats/ || true
+        
+        mkdir -p dist/plugins/iconengines
+        cp /mingw64/share/qt5/plugins/iconengines/*.dll dist/plugins/iconengines/ || true
+        
+        # Recursively copy DLL dependencies
+        # This function loops until no new DLLs are added
+        copy_dlls() {
+            local changed=1
+            while [ $changed -eq 1 ]; do
+                changed=0
+                # Find all .exe and .dll files in dist
+                local binaries=$(find dist -name "*.exe" -o -name "*.dll")
+                
+                for bin in $binaries; do
+                    # Get list of dependencies
+                    local deps=$(ldd "$bin" | grep "mingw64" | awk '{print $3}' | sort | uniq)
+                    for dep in $deps; do
+                        local dep_name=$(basename "$dep")
+                        if [ ! -f "dist/$dep_name" ]; then
+                            echo "Copying dependency: $dep_name for $(basename $bin)"
+                            cp "$dep" "dist/"
+                            changed=1
+                        fi
+                    done
+                done
+            done
+        }
+        
+        copy_dlls
+
+        # Create Zip
+        cd dist
+        7z a -tzip ../扣货科技-Windows.zip *
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
