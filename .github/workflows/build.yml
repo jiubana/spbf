@@ -35,6 +35,7 @@ jobs:
           mingw-w64-x86_64-libcddb
           mingw-w64-x86_64-libgme
           mingw-w64-x86_64-libsidplayfp
+          mingw-w64-x86_64-portaudio
           git
 
     - name: Fix QtWinExtras Symlink
