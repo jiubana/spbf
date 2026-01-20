@@ -93,7 +93,7 @@ jobs:
         mkdir -p dist
         
         # Copy Executable
-        cp bin/扣货科技.exe dist/
+        cp bin/QMPlay2.exe dist/扣货科技.exe
         
         # Copy qt.conf
         if [ -f "qt.conf" ]; then
