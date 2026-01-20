@@ -162,16 +162,19 @@ void Updater::infoFinished()
                     if (UpdateVersionDate.isValid() && UpdateVersionDate == NewVersionDate)
                         canUpdate = false;
                 }
-                if (isNewVersion)
+                if (canUpdate)
                 {
                     const QString updateIsAvailable = tr("扣货科技 有可用更新！");
 #ifdef Q_OS_WIN
-                    if (updateFile.contains("QMPlay2") && !updateFile.contains("QMPlay2-setup") && QFile::exists(QMPlay2Core.getSettingsDir() + "QMPlay2Installer.exe"))
+                    if (updateFile.fileName().contains("QMPlay2") && !updateFile.fileName().contains("QMPlay2-setup") && QFile::exists(QMPlay2Core.getSettingsDir() + "QMPlay2Installer.exe"))
+                    {
                         Notifies::notify(updateIsAvailable, tr("新版本将会在关闭程序后安装"), 0, 1);
+                    }
                     else
+                    {
                         Notifies::notify(updateIsAvailable, tr("扣货科技 新版本: %1").arg(NewVersion) + "\n\n" + tr("下载列表位于 \"版主->关于 扣货科技\""), 0, 1);
                         settings.set("UpdateVersion", NewVersion);
-                    };
+                    }
 #endif
 
 #ifdef UPDATER
@@ -180,7 +183,6 @@ void Updater::infoFinished()
                         endWork(tr("No update available"));
                     else if (Version::isPortable())
                     {
-                        notify();
                         endWork(updateIsAvailable);
                     }
                     else if (updateFile.open(QFile::WriteOnly | QFile::Truncate))
@@ -188,7 +190,6 @@ void Updater::infoFinished()
                     else
                         endWork(tr("Error creating update file"));
 #else
-                    notify();
 #endif
                 }
                 else
